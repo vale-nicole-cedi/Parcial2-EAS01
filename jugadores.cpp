@@ -58,7 +58,7 @@ void Jugador::atacar(/* Agregar parámetros para atacar a otro Jugador */){
     */
     /*
     Nota:
-        int x = rand() & 1000; asigna un valor aleatorio entre 0 y 999 a x;
+        int x = rand() % 1000; asigna un valor aleatorio entre 0 y 999 a x;
         Puedes usar esto para la probabilidad del ataque.
     */
 }
