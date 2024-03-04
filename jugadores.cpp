@@ -11,11 +11,15 @@ class Jugador{
         Agrega propiedades para guardar la vida(número entero), ataque(número entero) y nombre del jugador.
         Agrega una propiedad para guardar el jugador que lo atacó por última vez.
     */
+   public:
+   int vida, attack;
+   string nombre;
+   Jugador* atacadoPor;
     
     Jugador(); 
-    Jugador(/* agrega parámetros para asignar hp, ataque y nombre */); 
+    Jugador(int vida, int attack, string nombre); 
     
-    void atacar(/* agregar parámetros para atacar a otro jugador*/); 
+    void atacar(Jugador &j2); 
 };
 
 int main()
@@ -29,6 +33,23 @@ int main()
         No importa quien ataca primero.
     */
 
+   Jugador j1(100,10,"Mario");
+   Jugador j2(100,10,"Carlos");
+
+   while(j1.vida > 0 && j2.vida > 0){
+    j1.atacar(j2);
+    if(j2.vida <= 0){
+        cout << j1.nombre << " es el ganador" << endl;
+        break;
+    }
+
+    j2.atacar(j1);
+    if(j1.vida <= 0){
+        cout << j2.nombre << " es el ganador" << endl;
+        break;
+    }
+   }
+
     return 0;
 }
 
@@ -37,17 +58,32 @@ Jugador::Jugador(){
         Asignar 100 a hp y 5 a attack como valores default.
         Asignar 'No definido' al nombre como default.
     */
+   this->vida = 100;
+   this->attack = 5;
+   this->nombre = "No definido";
 }
 
-Jugador::Jugador(/* Agrega parámetros para asignar hp, ataque y nombre*/){
+Jugador::Jugador(int vida, int attack, string nombre){
     /*
         Asignar los parámetros recibidos a las propiedades del objeto.
         No se pueden asignar valores negativos a hp y attack.
         Máximo 200 hp y 20 attack
     */
+   this->vida = vida;
+   this->attack = attack;
+   this->nombre = nombre;
 }
 
-void Jugador::atacar(/* Agregar parámetros para atacar a otro Jugador */){
+void Jugador::atacar(Jugador &j2){
+    int ran = rand() % 5;
+    if(ran == 0){
+        cout << this->nombre << " ataco a " << j2.nombre << " pero fallo, vida restante de " << j2.nombre <<  " = " << j2.vida << endl; 
+    }else{
+        j2.vida -= this-> attack;
+        cout << this->nombre << " ataco a " << j2.nombre << " e hizo " << this->attack << " de danio, vida restante de " << j2.nombre <<  " = " << j2.vida << endl; 
+    }
+
+    j2.atacadoPor = this;
     /*
         El jugador atacado(el que recibes como parámetro) pierde HP igual al ataque del jugador que ataca.
         Existe un 20% de probabilidad de que el ataque falle y no haga daño.
